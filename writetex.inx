@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+    <_name>WriteTeX</_name>
+    <id>org.pecker.writetex</id>
+	<dependency type="executable" location="extensions">eqtexsvg.py</dependency>
+	<dependency type="executable" location="extensions">inkex.py</dependency>
+	<dependency type="executable" location="path">xelatex</dependency>
+	<dependency type="executable" location="path">pdf2svg</dependency>	
+	<param name="preamble" type="string" _gui-text="Preamble File: "></param>
+	<param name="scale" type="float" precision="1" min="0.1" max="50" _gui-text="Scale Factor">1</param>
+	<param name="action" type="notebook">
+		<page name="new" _gui-text="New Tex String">
+			<param name="formula" type="string" _gui-text="Latex Source: "></param>
+			<param name="rescale" type="boolean" _gui-text="Rescale the node.">false</param>
+		</page>
+		<page name="newfile" _gui-text="New from File">
+			<param name="inputfile" type="string" _gui-text="Latex Source File: "></param>
+		</page>
+		<page name="viewold" _gui-text="View Old Text">
+			<_param name="old" type="description">Choose this tab if you would like to see the old TeX string.</_param>
+		</page>
+	</param>
+	<param name="pdftosvg" type="enum" _gui-text="PDF to SVG converter: ">
+		<_item value="1">PDF2SVG</_item>
+		<_item value="2">PStoEDIT</_item>
+	</param>
+    <effect>
+                <object-type>all</object-type>
+    </effect>
+    <script>
+        <command reldir="extensions" interpreter="python">writetex.py</command>
+    </script>
+</inkscape-extension>
