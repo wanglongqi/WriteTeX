@@ -21,7 +21,7 @@ Hope you like it!
 """
 
 import inkex,os,tempfile,sys,copy
-WriteTexNS=u'http://pecker.duapp.com'
+WriteTexNS=u'http://wanglongqi.github.io/WriteTeX'
 # from textext
 SVG_NS=u"http://www.w3.org/2000/svg"
 XLINK_NS = u"http://www.w3.org/1999/xlink"
