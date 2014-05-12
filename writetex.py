@@ -64,7 +64,7 @@ class WriteTex(inkex.Effect):
                 node=self.selected[i]
                 if node.tag != '{%s}g' % SVG_NS: continue                
                 if '{%s}text'%WriteTexNS in node.attrib:
-                    print >>sys.stderr,node.attrib.get('{%s}text'%WriteTexNS,'').decode('string-escape'),
+                    print >>sys.stderr,node.attrib.get('{%s}text'%WriteTexNS,'').decode('string-escape')
                     return
             print >>sys.stderr,"No text find."  
             return
