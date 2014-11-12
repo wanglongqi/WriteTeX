@@ -1,6 +1,5 @@
 WriteTeX
 ========
-
 <img src=https://github.com/wanglongqi/WriteTeX/raw/master/writetex.png width=500px alt=Logo>
 
 An Inkscape extension: Latex/Tex editor for Inkscape, inspired by [textext](http://pav.iki.fi/software/textext/).
@@ -38,3 +37,4 @@ If there are other ways to do so, please tell me.
 Please refer to [my website](https://wanglongqi.github.io) for more information about me and the extension.
 
 
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/wanglongqi/WriteTeX?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
