@@ -33,7 +33,7 @@ Due to the limitation of Inkscape build-in extension system, I cannot set defaul
 
 If there are other ways to do so, please tell me.
 
-## 4. Little note on install `pstoedit` to Mac OSX
+## 4. Notes for Mac OSX
 
 Please check [this post for details](https://wanglongqi.github.io/inkscape/2015/06/04/writetexmac/).
 
