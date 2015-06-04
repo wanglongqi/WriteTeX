@@ -6,16 +6,16 @@
 	<dependency type="executable" location="extensions">inkex.py</dependency>
 	<dependency type="executable" location="path">xelatex</dependency>
 	<param name="preamble" type="string" _gui-text="Preamble File: "></param>
-	<param name="scale" type="float" precision="1" min="0.1" max="50" _gui-text="Scale Factor">1</param>
+	<param name="scale" type="float" precision="2" min="0.1" max="50" _gui-text="Scale Factor">1</param>
 	<param name="action" type="notebook">
-		<page name="new" _gui-text="New Tex String">
-			<param name="formula" type="string" _gui-text="Latex Source: "></param>
+		<page name="new" _gui-text="New TeX String">
+			<param name="formula" type="string" _gui-text="LateX Source: "></param>
 			<param name="rescale" type="boolean" _gui-text="Rescale the node.">false</param>
 		</page>
 		<page name="newfile" _gui-text="New from File">
-			<param name="inputfile" type="string" _gui-text="Latex Source File: "></param>
+			<param name="inputfile" type="string" _gui-text="LateX Source File: "></param>
 		</page>
-		<page name="viewold" _gui-text="View Old Text">
+		<page name="viewold" _gui-text="View OLD Text">
 			<_param name="old" type="description">Choose this tab if you would like to see the old TeX string.</_param>
 		</page>
 	</param>
