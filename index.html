@@ -1,35 +1,26 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-us">
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
-
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-
+    <meta charset="UTF-8">
     <title>Writetex by wanglongqi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
   </head>
-
   <body>
-    <header>
-      <div class="inner">
-        <h1>Writetex</h1>
-        <h2>An Inkscape extension: Latex/Tex editor for Inkscape </h2>
-        <a href="https://github.com/wanglongqi/WriteTeX" class="button"><small>View project on</small>GitHub</a>
-      </div>
-    </header>
+    <section class="page-header">
+      <h1 class="project-name">Writetex</h1>
+      <h2 class="project-tagline">An Inkscape extension: Latex/Tex editor for Inkscape </h2>
+      <a href="https://github.com/wanglongqi/WriteTeX" class="btn">View on GitHub</a>
+      <a href="https://github.com/wanglongqi/WriteTeX/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/wanglongqi/WriteTeX/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
 
-    <div id="content-wrapper">
-      <div class="inner clearfix">
-        <section id="main-content">
-          <h1>
-<a name="writetex" class="anchor" href="#writetex"><span class="octicon octicon-link"></span></a>WriteTeX</h1>
+    <section class="main-content">
+      <h1>
+<a id="writetex" class="anchor" href="#writetex" aria-hidden="true"><span class="octicon octicon-link"></span></a>WriteTeX</h1>
 
 <p><img src="https://github.com/wanglongqi/WriteTeX/raw/master/writetex.png" width="500px" alt="Logo"></p>
 
@@ -38,12 +29,12 @@
 <p>This extension uses Inkscape build-in extension system, does not require TK or PyGtk as textext. Live preview feature is supported. You can obtain orginal TeX source from View Old Text tab. </p>
 
 <h2>
-<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
 
 <p>Just drop writetex.py and writetex.inx to Inkscape extension folder, which is normally at $inkscapeFolder$/share/extensions. Make sure XeLatex and PDF2SVG or PDFtoEDIT are in you path.</p>
 
 <h3>
-<a name="1-latex-text-input" class="anchor" href="#1-latex-text-input"><span class="octicon octicon-link"></span></a>1. Latex text input</h3>
+<a id="1-latex-text-input" class="anchor" href="#1-latex-text-input" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. Latex text input</h3>
 
 <p>The basic UI is like this:</p>
 
@@ -54,14 +45,14 @@
 <p>Normally, WriteTeX trys to keep transform in old and new object. But you can overide this behaviour by check the Rescale checkbox, which will rescale the object by current scale factor accordingly.</p>
 
 <h3>
-<a name="2-input-from-file" class="anchor" href="#2-input-from-file"><span class="octicon octicon-link"></span></a>2. Input from file</h3>
+<a id="2-input-from-file" class="anchor" href="#2-input-from-file" aria-hidden="true"><span class="octicon octicon-link"></span></a>2. Input from file</h3>
 
 <p>For long text, you may want to edit it in your TeX editor. You only need to write the body of the text. Paste the path of the file in to the EditBox. If you want to specify preamble file, specify it in the Preamble File EditBox. Then you are good to go.</p>
 
 <p><img src="https://github.com/wanglongqi/WriteTeX/raw/master/images/readfromfile.png" alt="FromFile"></p>
 
 <h3>
-<a name="3-view-old-tex-strings" class="anchor" href="#3-view-old-tex-strings"><span class="octicon octicon-link"></span></a>3. View old tex strings</h3>
+<a id="3-view-old-tex-strings" class="anchor" href="#3-view-old-tex-strings" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. View old tex strings</h3>
 
 <p>Due to the limitation of Inkscape build-in extension system, I cannot set default TeX Text as the orignal TeX string. Therefore, we have this bypass function. If you want to edit the orignal TeX strings, use this function to obtain you orignal TeX Strings. Then edit the strings. Here is a demo on obtain orginal TeX strings:</p>
 
@@ -69,28 +60,23 @@
 
 <p>If there are other ways to do so, please tell me.</p>
 
+<h3>
+<a id="4-note-for-mac-osx" class="anchor" href="#4-note-for-mac-osx" aria-hidden="true"><span class="octicon octicon-link"></span></a>4. Note for MAC OSX</h3>
+
+<p>Please check <a href="https://wanglongqi.github.io/inkscape/2015/06/04/writetexmac/">this post for details</a>.</p>
+
 <h2>
-<a name="additional-information" class="anchor" href="#additional-information"><span class="octicon octicon-link"></span></a>Additional information</h2>
+<a id="additional-information" class="anchor" href="#additional-information" aria-hidden="true"><span class="octicon octicon-link"></span></a>Additional information</h2>
 
 <p>Please refer to <a href="https://wanglongqi.github.io">my website</a> for more information about me and the extension.</p>
-        </section>
 
-        <aside id="sidebar">
-          <a href="https://github.com/wanglongqi/WriteTeX/zipball/master" class="button">
-            <small>Download</small>
-            .zip file
-          </a>
-          <a href="https://github.com/wanglongqi/WriteTeX/tarball/master" class="button">
-            <small>Download</small>
-            .tar.gz file
-          </a>
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/wanglongqi/WriteTeX">Writetex</a> is maintained by <a href="https://github.com/wanglongqi">wanglongqi</a>.</span>
 
-          <p class="repo-owner"><a href="https://github.com/wanglongqi/WriteTeX"></a> is maintained by <a href="https://github.com/wanglongqi">wanglongqi</a>.</p>
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
 
-          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
-        </aside>
-      </div>
-    </div>
+    </section>
 
             <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
@@ -105,3 +91,4 @@
 
   </body>
 </html>
+
