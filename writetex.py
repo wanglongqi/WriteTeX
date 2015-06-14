@@ -5,19 +5,11 @@ writetex.py
 An Latex equation editor for Inkscape.
 
 :Author: WANG Longqi <iqgnol@gmail.com>
-:Date: 2014-03-06
+:Date: 2015-06-14
+:Version: v0.4
 
-Update: 2014-03-07
-    - Rewrite svg merge code, especially for pdf2svg's. 
-    - Redesign UI. 
-    - Ready for first public release.
-
-This Inkscape extension is heavily influenced by Pauli Virtanen's textext,
-which is one of my favorite Inkscape extensions. However,textext is not 
-update for years and needs TK or PyGTK,which always needs some fix in path.
-Therefore,I finally decided to write a new extension for this purpose. This 
-extension is a native Inkscape extension; you do not need TK or PyGTK. 
-Hope you like it!
+This file is a part of WriteTeX extension for Inkscape. For more information,
+please refer to http://wanglongqi.github.io/WriteTeX.
 """
 
 import inkex,os,tempfile,sys,copy
@@ -59,7 +51,7 @@ class WriteTex(inkex.Effect):
         self.OptionParser.add_option("-r","--rescale",
                         action="store",type="string",
                         dest="rescale",default="",
-                        help="PDFtoSVG Converter")
+                        help="Rescale the object")
     def effect(self):
         self.options.scale=float(self.options.scale)
         action=self.options.action.strip("\"")
