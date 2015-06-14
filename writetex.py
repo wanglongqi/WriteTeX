@@ -120,23 +120,30 @@ class WriteTex(inkex.Effect):
 
             os.popen('xelatex "-output-directory=%s" -interaction=nonstopmode -halt-on-error "%s" > "%s"' \
                       % (tmp_dir,tex_file,out_file))
-            
-            if self.options.pdftosvg=='1':                      
-                os.popen('pdf2svg %s %s'%(pdf_file,svg_file)) 
-                self.merge_pdf2svg_svg(svg_file)
+
+            if not os.path.exists(pdf_file):
+                print >>sys.stderr, "Latex error: check your latex file and preamble."
+                print >>sys.stderr,open(log_file).read()
             else:
-                os.popen('pstoedit -f plot-svg "%s" "%s"  -dt -ssp -psarg -r9600x9600 > "%s" 2> "%s"' \
-                          % ( pdf_file,svg_file,out_file,err_file))                
-                self.merge_pstoedit_svg(svg_file)
+                if self.options.pdftosvg=='1':                      
+                    os.popen('pdf2svg %s %s'%(pdf_file,svg_file))
+                    self.merge_pdf2svg_svg(svg_file)
+                else:
+                    os.popen('pstoedit -f plot-svg "%s" "%s"  -dt -ssp -psarg -r9600x9600 > "%s" 2> "%s"' \
+                              % ( pdf_file,svg_file,out_file,err_file))  
+                    self.merge_pstoedit_svg(svg_file)
 
             os.remove(tex_file)
-            os.remove(svg_file)
-            os.remove(pdf_file)
             os.remove(log_file)
             os.remove(out_file)
             if os.path.exists(err_file):
                 os.remove(err_file)
-            os.remove(aux_file)
+            if os.path.exists(aux_file):
+                os.remove(aux_file)
+            if os.path.exists(svg_file):
+                os.remove(svg_file)
+            if os.path.exists(pdf_file):
+                os.remove(pdf_file)
             os.rmdir(tmp_dir)
 
         
