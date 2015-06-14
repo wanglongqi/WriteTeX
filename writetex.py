@@ -37,6 +37,10 @@ class WriteTex(inkex.Effect):
                         action="store",type="string",
                         dest="preamble",default="",
                         help="Preamble File")
+        self.OptionParser.add_option("--read-as-line",
+                        action="store",type="string",
+                        dest="preline",default="",
+                        help="Read preamble as string")
         self.OptionParser.add_option("-s","--scale",
                         action="store",type="string",
                         dest="scale",default="",
@@ -88,13 +92,16 @@ class WriteTex(inkex.Effect):
             out_file=os.path.join(tmp_dir,"writetex.out")
             err_file=os.path.join(tmp_dir,"writetex.err")
             aux_file=os.path.join(tmp_dir,"writetex.aux")
-            
-            if self.options.preamble=="":
-                preamble=""
+
+            if self.options.preline == "true":
+                preamble = self.options.preamble
             else:
-                f=open(self.options.preamble)
-                preamble=f.read()
-                f.close()
+                if self.options.preamble=="":
+                    preamble=""
+                else:
+                    f=open(self.options.preamble)
+                    preamble=f.read()
+                    f.close()
                 
             self.tex=r"""
             \documentclass[landscape,a3paper]{article}
