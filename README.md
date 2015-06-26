@@ -12,8 +12,8 @@ Just drop `writetex.py` and `writetex.inx` to Inkscape extension folder, which i
 ### Binaries for PDFTOSVG converter
 For ease of the users, I also provide unofficial PDFTOSVG binaries for Windows and Mac OSX users. 
 
-- For **Windows** user, binary version of [*pdf2svg* is provided](https://github.com/wanglongqi/WriteTeX/raw/master/pdf2svg.7z).
-- For **Mac OSX** user, binary version of [*pstoedit* is provided](https://github.com/wanglongqi/WriteTeX/raw/master/pstoedit.zip).
+- For **Windows** user, binary version of *pdf2svg* is provided.
+- For **Mac OSX** user, binary version of *pstoedit* and *pdf2svg* is provided.
 - For **Linux** and other OS, *pdf2svg* or *pstoedit* usually can be installed from default package manager.
 
 ## Usage
