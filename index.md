@@ -1,6 +1,7 @@
 WriteTeX
 ========
-<img src="/images/writetex.png" width=300px alt=Logo>
+
+![Logo](/images/writetex.png =300x)
 
 An Inkscape extension: Latex/Tex editor for Inkscape, inspired by [textext](http://pav.iki.fi/software/textext/).
 
