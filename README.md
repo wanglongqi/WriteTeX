@@ -1,4 +1,4 @@
-WriteTeX
+[WriteTeX](https://wanglongqi.github.io/WriteTeX/)
 ========
 <img src=https://github.com/wanglongqi/WriteTeX/raw/master/writetex.png width=300px alt=Logo>
 
@@ -8,6 +8,3 @@ This extension uses Inkscape build-in extension system, does not require TK or P
 
 ## Installation
 Just drop `writetex.py` and `writetex.inx` to Inkscape extension folder, which is normally at `$inkscapeFolder$/share/extensions`. Make sure `XeLatex` and `PDF2SVG` or `PDFtoEDIT` are in you path. 
-
-### [Website](https://wanglongqi.github.io/WriteTeX/)
-
