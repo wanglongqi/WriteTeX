@@ -40,6 +40,10 @@ Due to the limitation of Inkscape build-in extension system, I cannot set defaul
 
 If there are other ways to do so, please tell me.
 
+### 4. Customize `latex` command
+
+Coming soon.
+
 ## Additional information
 Please refer to [my website](https://wanglongqi.github.io) for more information about me and the extension.
 
