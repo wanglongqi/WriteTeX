@@ -1,0 +1,8 @@
+title: WriteTeX
+description: "An Inkscape extension: Latex/Tex editor for Inkscape "
+google_analytics: UA-6527820-1
+show_downloads: true
+theme: jekyll-theme-architect
+
+gems:
+  - jekyll-mentions
