@@ -5,8 +5,8 @@ writetex.py
 An Latex equation editor for Inkscape.
 
 :Author: WANG Longqi <iqgnol@gmail.com>
-:Date: 2015-06-14
-:Version: v0.4
+:Date: 2017-04-01
+:Version: v0.99
 
 This file is a part of WriteTeX extension for Inkscape. For more information,
 please refer to http://wanglongqi.github.io/WriteTeX.
@@ -97,6 +97,7 @@ class WriteTex(inkex.Effect):
             out_file = os.path.join(tmp_dir, "writetex.out")
             err_file = os.path.join(tmp_dir, "writetex.err")
             aux_file = os.path.join(tmp_dir, "writetex.aux")
+            crop_file = os.path.join(tmp_dir, "writetex-crop.pdf")
 
             if self.options.preline == "true":
                 preamble = self.options.preamble
@@ -132,7 +133,15 @@ class WriteTex(inkex.Effect):
             else:
                 # Setting `latexcmd` to following string produces the same result as xelatex condition:
                 # 'xelatex "-output-directory={tmp_dir}" -interaction=nonstopmode -halt-on-error "{tex_file}" > "{out_file}"'
-                os.popen(self.options.latexcmd.format(tmp_dir=tmp_dir, tex_file=tex_file, out_file=out_file))
+                os.popen(self.options.latexcmd.format(
+                    tmp_dir=tmp_dir, tex_file=tex_file, out_file=out_file))
+
+            try:
+                os.popen('pdfcrop %s' % pdf_file)
+                os.remove(pdf_file)
+                os.rename(crop_file, pdf_file)
+            except:
+                pass
 
             if not os.path.exists(pdf_file):
                 print >>sys.stderr, "Latex error: check your latex file and preamble."
@@ -196,14 +205,14 @@ class WriteTex(inkex.Effect):
         if replace:
             try:
                 if self.options.rescale == 'true':
-                    newnode.attrib['transform'] = 'matrix(%f,0,0,%f,%f,%f)' % (800*self.options.scale, 800*self.options.scale,
-                                                                               -200*self.options.scale, 100*self.options.scale)
+                    newnode.attrib['transform'] = 'matrix(%f,0,0,%f,%f,%f)' % (
+                        800*self.options.scale, 800*self.options.scale, 0, 0)
                 else:
                     if 'transform' in node.attrib:
                         newnode.attrib['transform'] = node.attrib['transform']
                     else:
-                        newnode.attrib['transform'] = 'matrix(%f,0,0,%f,%f,%f)' % (800*self.options.scale, 800*self.options.scale,
-                                                                                   -200*self.options.scale, 100*self.options.scale)
+                        newnode.attrib['transform'] = 'matrix(%f,0,0,%f,%f,%f)' % (
+                            800*self.options.scale, 800*self.options.scale, 0, 0)
                 newnode.attrib['style'] = node.attrib['style']
             except:
                 pass
@@ -211,8 +220,8 @@ class WriteTex(inkex.Effect):
             p.remove(node)
             p.append(newnode)
         else:
-            newnode.attrib['transform'] = 'matrix(%f,0,0,%f,%f,%f)' % (800*self.options.scale, 800*self.options.scale,
-                                                                       -200*self.options.scale, 100*self.options.scale)
+            newnode.attrib['transform'] = 'matrix(%f,0,0,%f,%f,%f)' % (
+                800*self.options.scale, 800*self.options.scale, 0, 0)
             self.current_layer.append(newnode)
 
     def merge_pdf2svg_svg(self, svg_file):
@@ -260,14 +269,14 @@ class WriteTex(inkex.Effect):
         if replace:
             try:
                 if self.options.rescale == 'true':
-                    newnode.attrib['transform'] = 'matrix(%f,0,0,%f,%f,%f)' % (self.options.scale, self.options.scale,
-                                                                               -168*self.options.scale, -100*self.options.scale)
+                    newnode.attrib['transform'] = 'matrix(%f,0,0,%f,%f,%f)' % (
+                        self.options.scale, self.options.scale, 0, 0)
                 else:
                     if 'transform' in node.attrib:
                         newnode.attrib['transform'] = node.attrib['transform']
                     else:
-                        newnode.attrib['transform'] = 'matrix(%f,0,0,%f,%f,%f)' % (self.options.scale, self.options.scale,
-                                                                                   -168*self.options.scale, -100*self.options.scale)
+                        newnode.attrib['transform'] = 'matrix(%f,0,0,%f,%f,%f)' % (
+                            self.options.scale, self.options.scale, 0, 0)
                 newnode.attrib['style'] = node.attrib['style']
             except:
                 pass
@@ -276,8 +285,8 @@ class WriteTex(inkex.Effect):
             p.append(newnode)
         else:
             self.current_layer.append(newnode)
-            newnode.attrib['transform'] = 'matrix(%f,0,0,%f,%f,%f)' % (self.options.scale, self.options.scale,
-                                                                       -168*self.options.scale, -100*self.options.scale)
+            newnode.attrib['transform'] = 'matrix(%f,0,0,%f,%f,%f)' % (
+                self.options.scale, self.options.scale, 0, 0)
 
 
 if __name__ == '__main__':
