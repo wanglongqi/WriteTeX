@@ -11,4 +11,3 @@ Just drop `writetex.py` and `writetex.inx` to Inkscape extension folder, which i
 
 ## More info
 Can be found in the [website](https://wanglongqi.github.io/WriteTeX/).
-
