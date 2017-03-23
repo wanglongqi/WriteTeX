@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
     <_name>WriteTeX</_name>
-    <id>org.pecker.writetex</id>
-	<dependency type="executable" location="extensions">eqtexsvg.py</dependency>
+    <id>tk.whywhow.writetex</id>
 	<dependency type="executable" location="extensions">inkex.py</dependency>
 	<param name="preamble" type="string" _gui-text="Preamble File: "></param>
 	<param name="read-as-line" type="boolean" _gui-text="Trade above as contents">false</param>

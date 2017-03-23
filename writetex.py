@@ -5,8 +5,8 @@ writetex.py
 An Latex equation editor for Inkscape.
 
 :Author: WANG Longqi <iqgnol@gmail.com>
-:Date: 2017-04-01
-:Version: v0.99
+:Date: 2017-03-23
+:Version: v1.1
 
 This file is a part of WriteTeX extension for Inkscape. For more information,
 please refer to http://wanglongqi.github.io/WriteTeX.
@@ -206,13 +206,15 @@ class WriteTex(inkex.Effect):
             try:
                 if self.options.rescale == 'true':
                     newnode.attrib['transform'] = 'matrix(%f,0,0,%f,%f,%f)' % (
-                        800*self.options.scale, 800*self.options.scale, 0, 0)
+                        800*self.options.scale, 800*self.options.scale,
+                        self.view_center[0], self.view_center[1])
                 else:
                     if 'transform' in node.attrib:
                         newnode.attrib['transform'] = node.attrib['transform']
                     else:
                         newnode.attrib['transform'] = 'matrix(%f,0,0,%f,%f,%f)' % (
-                            800*self.options.scale, 800*self.options.scale, 0, 0)
+                            800*self.options.scale, 800*self.options.scale,
+                            self.view_center[0], self.view_center[1])
                 newnode.attrib['style'] = node.attrib['style']
             except:
                 pass
@@ -221,7 +223,8 @@ class WriteTex(inkex.Effect):
             p.append(newnode)
         else:
             newnode.attrib['transform'] = 'matrix(%f,0,0,%f,%f,%f)' % (
-                800*self.options.scale, 800*self.options.scale, 0, 0)
+                800*self.options.scale, 800*self.options.scale,
+                self.view_center[0], self.view_center[1])
             self.current_layer.append(newnode)
 
     def merge_pdf2svg_svg(self, svg_file):
@@ -270,13 +273,15 @@ class WriteTex(inkex.Effect):
             try:
                 if self.options.rescale == 'true':
                     newnode.attrib['transform'] = 'matrix(%f,0,0,%f,%f,%f)' % (
-                        self.options.scale, self.options.scale, 0, 0)
+                        self.options.scale, self.options.scale,
+                        self.view_center[0], self.view_center[1])
                 else:
                     if 'transform' in node.attrib:
                         newnode.attrib['transform'] = node.attrib['transform']
                     else:
                         newnode.attrib['transform'] = 'matrix(%f,0,0,%f,%f,%f)' % (
-                            self.options.scale, self.options.scale, 0, 0)
+                            self.options.scale, self.options.scale,
+                            self.view_center[0], self.view_center[1])
                 newnode.attrib['style'] = node.attrib['style']
             except:
                 pass
@@ -286,7 +291,8 @@ class WriteTex(inkex.Effect):
         else:
             self.current_layer.append(newnode)
             newnode.attrib['transform'] = 'matrix(%f,0,0,%f,%f,%f)' % (
-                self.options.scale, self.options.scale, 0, 0)
+                self.options.scale, self.options.scale,
+                self.view_center[0], self.view_center[1])
 
 
 if __name__ == '__main__':
