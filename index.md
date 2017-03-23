@@ -8,7 +8,7 @@ An Inkscape extension: Latex/Tex editor for Inkscape, inspired by [textext](http
 This extension uses Inkscape build-in extension system, does not require TK or PyGtk as textext. Live preview feature is supported. You can obtain original TeX source from View Original TeX tab.
 
 ## Installation
-Just drop `writetex.py` and `writetex.inx` to Inkscape extension folder, which is normally at `$inkscapeFolder$/share/extensions`. Make sure you have at least one LaTeX command and one PDFtoSVG converter are in you path.
+Just drop `writetex.py` and `writetex.inx` to Inkscape extension folder, which is normally at `$inkscapeFolder$/share/extensions`. Make sure you have at least one **LaTeX** command and one **PDFtoSVG** converter are in your path. The lastest release can be downloaded from [*here*](https://github.com/wanglongqi/WriteTeX/releases/latest).
 
 ### Binaries for PDFTOSVG converter
 For ease of the users, I also provide unofficial PDFTOSVG binaries for Windows and Mac OSX users.
