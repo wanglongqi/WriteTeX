@@ -16,6 +16,7 @@
 		</page>
 		<page name="viewold" _gui-text="View Original TeX">
 			<_param name="old" type="description">Choose this tab if you would like to obtain the original TeX string.</_param>
+            <param name="tosvg" type="boolean" _gui-text="Write output to Figure"></param>
 		</page>
         <page name="help" _gui-text="Help">
             <_param name="help" type="description">You need at least one LaTeX command and one PDFtoSVG command to execute this plugin correctly. Please visit http://writetex.tk for more information. If you have any suggestion, feel free to open an issue in the repository.</_param>
