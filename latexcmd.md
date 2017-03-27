@@ -6,7 +6,7 @@ The `LaTeX` command used to complie LaTeX string into pdf is now adjustable. An 
 
 `xelatex "-output-directory={tmp_dir}" -interaction=nonstopmode -halt-on-error "{tex_file}" > "{out_file}"`
 
-There are three options can be used to specified:
+There are three options can be specified:
 
 `{tmp_dir}`: this will be replaced by the directory of temporary directory used.
 
