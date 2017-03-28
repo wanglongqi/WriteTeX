@@ -2,6 +2,8 @@
 
 > This is an advanced option, if you do not know what you are doing, probably you should leave the default value as is.
 
+![UI](/images/latexcmd.png)
+
 The `LaTeX` command used to complie LaTeX string into pdf is now adjustable. An example is shown here:
 
 `xelatex "-output-directory={tmp_dir}" -interaction=nonstopmode -halt-on-error "{tex_file}" > "{out_file}"`
