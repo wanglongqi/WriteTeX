@@ -5,8 +5,8 @@ writetex.py
 An Latex equation editor for Inkscape.
 
 :Author: WANG Longqi <iqgnol@gmail.com>
-:Date: 2017-03-27
-:Version: v1.5
+:Date: 2017-03-30
+:Version: v1.5.1
 
 This file is a part of WriteTeX extension for Inkscape. For more information,
 please refer to http://wanglongqi.github.io/WriteTeX.
@@ -163,15 +163,17 @@ class WriteTex(inkex.Effect):
                     tmp_dir=tmp_dir, tex_file=tex_file, out_file=out_file))
 
             try:
-                os.popen('pdfcrop %s' % pdf_file)
-                os.remove(pdf_file)
-                os.rename(crop_file, pdf_file)
+                os.popen('pdfcrop "%s"' % pdf_file)
+                if os.path.exists(crop_file):
+                    os.remove(pdf_file)
+                    os.rename(crop_file, pdf_file)
             except:
                 pass
 
             if not os.path.exists(pdf_file):
                 print >>sys.stderr, "Latex error: check your latex file and preamble."
                 print >>sys.stderr, open(log_file).read()
+                return
             else:
                 if self.options.pdftosvg == '1':
                     os.popen('pdf2svg %s %s' % (pdf_file, svg_file))
