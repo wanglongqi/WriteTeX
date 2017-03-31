@@ -5,8 +5,8 @@ writetex.py
 An Latex equation editor for Inkscape.
 
 :Author: WANG Longqi <iqgnol@gmail.com>
-:Date: 2017-03-27
-:Version: v1.5
+:Date: 2017-03-31
+:Version: v1.5.2
 
 This file is a part of WriteTeX extension for Inkscape. For more information,
 please refer to http://wanglongqi.github.io/WriteTeX.
@@ -17,6 +17,7 @@ import os
 import tempfile
 import sys
 import copy
+import subprocess
 WriteTexNS = u'http://wanglongqi.github.io/WriteTeX'
 # from textext
 SVG_NS = u"http://www.w3.org/2000/svg"
@@ -151,34 +152,50 @@ class WriteTex(inkex.Effect):
             tex.close()
 
             if self.options.latexcmd.lower() == "xelatex":
-                os.popen('xelatex "-output-directory=%s" -interaction=nonstopmode -halt-on-error "%s" > "%s"'
-                         % (tmp_dir, tex_file, out_file))
+                subprocess.call('xelatex "-output-directory=%s" -interaction=nonstopmode -halt-on-error "%s" > "%s"'
+                                % (tmp_dir, tex_file, out_file), shell=True)
             elif self.options.latexcmd.lower() == "pdflatex":
-                os.popen('pdflatex "-output-directory=%s" -interaction=nonstopmode -halt-on-error "%s" > "%s"'
-                         % (tmp_dir, tex_file, out_file))
+                subprocess.call('pdflatex "-output-directory=%s" -interaction=nonstopmode -halt-on-error "%s" > "%s"'
+                                % (tmp_dir, tex_file, out_file), shell=True)
             else:
                 # Setting `latexcmd` to following string produces the same result as xelatex condition:
                 # 'xelatex "-output-directory={tmp_dir}" -interaction=nonstopmode -halt-on-error "{tex_file}" > "{out_file}"'
-                os.popen(self.options.latexcmd.format(
-                    tmp_dir=tmp_dir, tex_file=tex_file, out_file=out_file))
+                subprocess.call(self.options.latexcmd.format(
+                    tmp_dir=tmp_dir, tex_file=tex_file, out_file=out_file), shell=True)
 
             try:
-                os.popen('pdfcrop %s' % pdf_file)
-                os.remove(pdf_file)
-                os.rename(crop_file, pdf_file)
+                # Here is a bug in pdfcrop, no idea how to fix.
+                crop_cmd = 'pdfcrop "%s"' % pdf_file
+                crop = subprocess.Popen(crop_cmd,
+                                        stdout=subprocess.PIPE,
+                                        stderr=subprocess.PIPE,
+                                        shell=True)
+                out = crop.communicate()
+                if len(out[1]) > 0:
+                    inkex.errormsg("Error in pdfcrop:\n")
+                    inkex.errormsg(" CMD executed: %s\n" % crop_cmd)
+                    for msg in out:
+                        inkex.errormsg(msg)
+                    inkex.errormsg("Process will continue without crop")
+
+                if os.path.exists(crop_file):
+                    os.remove(pdf_file)
+                    os.rename(crop_file, pdf_file)
             except:
                 pass
 
             if not os.path.exists(pdf_file):
                 print >>sys.stderr, "Latex error: check your latex file and preamble."
                 print >>sys.stderr, open(log_file).read()
+                return
             else:
                 if self.options.pdftosvg == '1':
-                    os.popen('pdf2svg %s %s' % (pdf_file, svg_file))
+                    subprocess.call('pdf2svg %s %s' %
+                                    (pdf_file, svg_file), shell=True)
                     self.merge_pdf2svg_svg(svg_file)
                 else:
-                    os.popen('pstoedit -f plot-svg "%s" "%s"  -dt -ssp -psarg -r9600x9600 > "%s" 2> "%s"'
-                             % (pdf_file, svg_file, out_file, err_file))
+                    subprocess.call('pstoedit -f plot-svg "%s" "%s"  -dt -ssp -psarg -r9600x9600 > "%s" 2> "%s"'
+                                    % (pdf_file, svg_file, out_file, err_file), shell=True)
                     self.merge_pstoedit_svg(svg_file)
 
             os.remove(tex_file)
