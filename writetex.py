@@ -18,6 +18,7 @@ import tempfile
 import sys
 import copy
 import subprocess
+from distutils import spawn
 WriteTexNS = u'http://wanglongqi.github.io/WriteTeX'
 # from textext
 SVG_NS = u"http://www.w3.org/2000/svg"
@@ -164,23 +165,24 @@ class WriteTex(inkex.Effect):
                     tmp_dir=tmp_dir, tex_file=tex_file, out_file=out_file), shell=True)
 
             try:
-                # Here is a bug in pdfcrop, no idea how to fix.
-                crop_cmd = 'pdfcrop "%s"' % pdf_file
-                crop = subprocess.Popen(crop_cmd,
-                                        stdout=subprocess.PIPE,
-                                        stderr=subprocess.PIPE,
-                                        shell=True)
-                out = crop.communicate()
-                if len(out[1]) > 0:
-                    inkex.errormsg("Error in pdfcrop:\n")
-                    inkex.errormsg(" CMD executed: %s\n" % crop_cmd)
-                    for msg in out:
-                        inkex.errormsg(msg)
-                    inkex.errormsg("Process will continue without crop")
+                if not isinstance(spawn.find_executable('pdfcrop'),type(None)):
+                    # Here is a bug in pdfcrop, no idea how to fix.
+                    crop_cmd = 'pdfcrop "%s"' % pdf_file
+                    crop = subprocess.Popen(crop_cmd,
+                                            stdout=subprocess.PIPE,
+                                            stderr=subprocess.PIPE,
+                                            shell=True)
+                    out = crop.communicate()
+                    if len(out[1]) > 0:
+                        inkex.errormsg("Error in pdfcrop:")
+                        inkex.errormsg(" CMD executed: %s" % crop_cmd)
+                        for msg in out:
+                            inkex.errormsg(msg)
+                        inkex.errormsg("Process will continue without crop")
 
-                if os.path.exists(crop_file):
-                    os.remove(pdf_file)
-                    os.rename(crop_file, pdf_file)
+                    if os.path.exists(crop_file):
+                        os.remove(pdf_file)
+                        os.rename(crop_file, pdf_file)
             except:
                 pass
 
