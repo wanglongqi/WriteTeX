@@ -6,7 +6,7 @@ An Latex equation editor for Inkscape.
 
 :Author: WANG Longqi <iqgnol@gmail.com>
 :Date: 2017-08-12
-:Version: v1.6.0
+:Version: v1.6.1
 
 This file is a part of WriteTeX extension for Inkscape. For more information,
 please refer to http://wanglongqi.github.io/WriteTeX.
