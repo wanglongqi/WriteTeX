@@ -5,8 +5,8 @@ writetex.py
 An Latex equation editor for Inkscape.
 
 :Author: WANG Longqi <iqgnol@gmail.com>
-:Date: 2017-03-31
-:Version: v1.5.2
+:Date: 2017-08-12
+:Version: v1.6.0
 
 This file is a part of WriteTeX extension for Inkscape. For more information,
 please refer to http://wanglongqi.github.io/WriteTeX.
@@ -18,7 +18,8 @@ import tempfile
 import sys
 import copy
 import subprocess
-from distutils import spawn
+import re
+# from distutils import spawn
 WriteTexNS = u'http://wanglongqi.github.io/WriteTeX'
 # from textext
 SVG_NS = u"http://www.w3.org/2000/svg"
@@ -125,7 +126,6 @@ class WriteTex(inkex.Effect):
             out_file = os.path.join(tmp_dir, "writetex.out")
             err_file = os.path.join(tmp_dir, "writetex.err")
             aux_file = os.path.join(tmp_dir, "writetex.aux")
-            crop_file = os.path.join(tmp_dir, "writetex-crop.pdf")
 
             if self.options.preline == "true":
                 preamble = self.options.preamble
@@ -163,28 +163,6 @@ class WriteTex(inkex.Effect):
                 # 'xelatex "-output-directory={tmp_dir}" -interaction=nonstopmode -halt-on-error "{tex_file}" > "{out_file}"'
                 subprocess.call(self.options.latexcmd.format(
                     tmp_dir=tmp_dir, tex_file=tex_file, out_file=out_file), shell=True)
-
-            try:
-                if not isinstance(spawn.find_executable('pdfcrop'),type(None)):
-                    # Here is a bug in pdfcrop, no idea how to fix.
-                    crop_cmd = 'pdfcrop "%s"' % pdf_file
-                    crop = subprocess.Popen(crop_cmd,
-                                            stdout=subprocess.PIPE,
-                                            stderr=subprocess.PIPE,
-                                            shell=True)
-                    out = crop.communicate()
-                    if len(out[1]) > 0:
-                        inkex.errormsg("Error in pdfcrop:")
-                        inkex.errormsg(" CMD executed: %s" % crop_cmd)
-                        for msg in out:
-                            inkex.errormsg(msg)
-                        inkex.errormsg("Process will continue without crop")
-
-                    if os.path.exists(crop_file):
-                        os.remove(pdf_file)
-                        os.rename(crop_file, pdf_file)
-            except:
-                pass
 
             if not os.path.exists(pdf_file):
                 print >>sys.stderr, "Latex error: check your latex file and preamble."
@@ -229,6 +207,9 @@ class WriteTex(inkex.Effect):
                 if tag in ['g', 'path', 'line']:
                     child = svg_to_group(self, child)
                     svgout.append(child)
+
+            # TODO: add crop range code here.
+
             return svgout
 
         doc = inkex.etree.parse(svg_file)
@@ -276,6 +257,9 @@ class WriteTex(inkex.Effect):
             self.current_layer.append(newnode)
 
     def merge_pdf2svg_svg(self, svg_file):
+        # This is the smallest point coordinates assumed
+        MAX_XY = [-10000000, -10000000]
+
         def svg_to_group(self, svgin):
             target = {}
             for node in svgin.xpath('//*[@id]'):
@@ -290,6 +274,11 @@ class WriteTex(inkex.Effect):
                         node.attrib['x'], node.attrib['y'])
                     for i in target[href].iterchildren():
                         i.attrib['transform'] = trans
+                        x, y = self.parse_transform(trans)
+                        if x > MAX_XY[0]:
+                            MAX_XY[0] = x
+                        if y > MAX_XY[1]:
+                            MAX_XY[1] = y
                         p.append(copy.copy(i))
 
             svgout = inkex.etree.Element(inkex.addNS('g', 'WriteTexNS'))
@@ -303,6 +292,7 @@ class WriteTex(inkex.Effect):
 
         doc = inkex.etree.parse(svg_file)
         svg = doc.getroot()
+        inkex.errormsg(simpletransform.computeBBox(svg))
         newnode = svg_to_group(self, svg)
         newnode.attrib['{%s}text' %
                        WriteTexNS] = self.text.encode('string-escape')
@@ -330,8 +320,8 @@ class WriteTex(inkex.Effect):
                     else:
                         newnode.attrib['transform'] = 'matrix(%f,0,0,%f,%f,%f)' % (
                             self.options.scale, self.options.scale,
-                            self.view_center[0]-self.width/6,
-                            self.view_center[1]-self.height/6)
+                            self.view_center[0]-MAX_XY[0]*self.options.scale,
+                            self.view_center[1]-MAX_XY[1]*self.options.scale)
                 newnode.attrib['style'] = node.attrib['style']
             except:
                 pass
@@ -342,9 +332,27 @@ class WriteTex(inkex.Effect):
             self.current_layer.append(newnode)
             newnode.attrib['transform'] = 'matrix(%f,0,0,%f,%f,%f)' % (
                 self.options.scale, self.options.scale,
-                self.view_center[0]-self.width/6,
-                self.view_center[1]-self.height/6)
+                self.view_center[0]-MAX_XY[0]*self.options.scale,
+                self.view_center[1]-MAX_XY[1]*self.options.scale)
 
+    @staticmethod
+    def parse_transform(transf):
+        if transf == "" or transf is None:
+            return(0, 0)
+        stransf = transf.strip()
+        result = re.match(
+            "(translate|scale|rotate|skewX|skewY|matrix)\s*\(([^)]*)\)\s*,?",
+            stransf)
+        if result.group(1) == "translate":
+            args = result.group(2).replace(',', ' ').split()
+            dx = float(args[0])
+            if len(args) == 1:
+                dy = 0.0
+            else:
+                dy = float(args[1])
+            return (dx, dy)
+        else:
+            return (0, 0)
 
 if __name__ == '__main__':
     e = WriteTex()
