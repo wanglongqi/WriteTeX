@@ -292,7 +292,6 @@ class WriteTex(inkex.Effect):
 
         doc = inkex.etree.parse(svg_file)
         svg = doc.getroot()
-        inkex.errormsg(simpletransform.computeBBox(svg))
         newnode = svg_to_group(self, svg)
         newnode.attrib['{%s}text' %
                        WriteTexNS] = self.text.encode('string-escape')
