@@ -1,5 +1,9 @@
 [WriteTeX](https://wanglongqi.github.io/WriteTeX/)
 ========
+
+If you like this plugin, please star this project. It helps me to evaluate whether this plugin is needed. Thanks!
+如果你喜欢这个插件，请star这个项目，这可以帮助我了解这个插件的需求。谢谢！
+
 <img src=https://github.com/wanglongqi/WriteTeX/raw/master/writetex.png width=300px alt=Logo>
 
 An Inkscape extension: Latex/Tex editor for Inkscape, inspired by [textext](http://pav.iki.fi/software/textext/).
