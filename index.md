@@ -3,13 +3,14 @@ WriteTeX
 
 ![Logo](/images/writetex.png)
 
-Theoretically, Inkscape supports import pdf text as path in the lastest version. This extension should be expired. If you still think this plugin is useful, please star this project in the [github repository](//git.writetex.tk). It helps me to evaluate whether this plugin is needed anymore. Thanks! 
-
-理论上讲，新版的Inkscape已经支持将PDF中文字导入为路径，这个插件的功能应该已经过时。如果你仍然觉得这个插件有用，请在项目[源代码库](//git.writetex.tk)star这个项目，这可以帮助我了解这个插件的需求。谢谢！
-
 An Inkscape extension: Latex/Tex editor for Inkscape, inspired by [textext](http://pav.iki.fi/software/textext/).
 
 This extension uses Inkscape build-in extension system, does not require TK or PyGtk as textext. Live preview feature is supported. You can obtain original TeX source from View Original TeX tab.
+
+## Note to users
+Theoretically, Inkscape supports import pdf text as path in the lastest version. This extension should be expired. If you still think this plugin is useful, please star this project in the [github repository](//git.writetex.tk). It helps me to evaluate whether this plugin is needed anymore. Thanks! 
+
+理论上讲，新版的Inkscape已经支持将PDF中文字导入为路径，这个插件的功能应该已经过时。如果你仍然觉得这个插件有用，请在项目[源代码库](//git.writetex.tk)star这个项目，这可以帮助我了解这个插件的需求。谢谢！
 
 ## Installation
 Just drop `writetex.py` and `writetex.inx` to Inkscape extension folder, which is normally at `$inkscapeFolder$/share/extensions`. Make sure you have at least one **LaTeX** command and one **PDFtoSVG** converter are in your path. The lastest release can be downloaded from [*here*](https://github.com/wanglongqi/WriteTeX/releases/latest).
