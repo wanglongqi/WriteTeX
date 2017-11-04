@@ -5,8 +5,8 @@ writetex.py
 An Latex equation editor for Inkscape.
 
 :Author: WANG Longqi <iqgnol@gmail.com>
-:Date: 2017-08-12
-:Version: v1.6.1
+:Date: 2017-11-04
+:Version: v1.6.2
 
 This file is a part of WriteTeX extension for Inkscape. For more information,
 please refer to http://wanglongqi.github.io/WriteTeX.
@@ -71,20 +71,6 @@ class WriteTex(inkex.Effect):
                                      help="Write output directly to a new node in svg file")
 
     def effect(self):
-        # self.zoom = float(self.document.xpath(
-        #     '//sodipodi:namedview/@inkscape:zoom', namespaces=inkex.NSS)[0])
-        # self.width = 1/self.zoom * \
-        #     float(self.document.xpath(
-        #         '//sodipodi:namedview/@inkscape:window-width', namespaces=inkex.NSS)[0])
-        # self.height = 1/self.zoom * \
-        #     float(self.document.xpath(
-        #         '//sodipodi:namedview/@inkscape:window-height', namespaces=inkex.NSS)[0])
-        # self.width = self.unittouu(str(self.width)+'px')
-        # self.height = self.unittouu(str(self.height)+'px')
-
-        self.width = 0
-        self.height = 0
-
         self.options.scale = float(self.options.scale)
         action = self.options.action.strip("\"")
         if action == "viewold":
@@ -96,8 +82,8 @@ class WriteTex(inkex.Effect):
                     if self.options.tosvg == "true":
                         doc = inkex.etree.fromstring(
                             '<text x="%g" y="%g">%s</text>' % (
-                                self.view_center[0]-self.width/6,
-                                self.view_center[1]-self.height/6,
+                                self.view_center[0],
+                                self.view_center[1],
                                 node.attrib.get(
                                     '{%s}text' % WriteTexNS, '').decode('string-escape')))
                         p = node.getparent()
@@ -236,16 +222,16 @@ class WriteTex(inkex.Effect):
                 if self.options.rescale == 'true':
                     newnode.attrib['transform'] = 'matrix(%f,0,0,%f,%f,%f)' % (
                         800*self.options.scale, 800*self.options.scale,
-                        self.view_center[0]-self.width/6,
-                        self.view_center[1]-self.height/6)
+                        self.view_center[0],
+                        self.view_center[1])
                 else:
                     if 'transform' in node.attrib:
                         newnode.attrib['transform'] = node.attrib['transform']
                     else:
                         newnode.attrib['transform'] = 'matrix(%f,0,0,%f,%f,%f)' % (
                             800*self.options.scale, 800*self.options.scale,
-                            self.view_center[0]-self.width/6,
-                            self.view_center[1]-self.height/6)
+                            self.view_center[0],
+                            self.view_center[1])
                 newnode.attrib['style'] = node.attrib['style']
             except:
                 pass
@@ -255,8 +241,8 @@ class WriteTex(inkex.Effect):
         else:
             newnode.attrib['transform'] = 'matrix(%f,0,0,%f,%f,%f)' % (
                 800*self.options.scale, 800*self.options.scale,
-                self.view_center[0]-self.width/6,
-                self.view_center[1]-self.height/6)
+                self.view_center[0],
+                self.view_center[1])
             self.current_layer.append(newnode)
 
     def merge_pdf2svg_svg(self, svg_file):
@@ -314,8 +300,8 @@ class WriteTex(inkex.Effect):
                 if self.options.rescale == 'true':
                     newnode.attrib['transform'] = 'matrix(%f,0,0,%f,%f,%f)' % (
                         self.options.scale, self.options.scale,
-                        self.view_center[0]-self.width/6,
-                        self.view_center[1]-self.height/6)
+                        self.view_center[0],
+                        self.view_center[1])
                 else:
                     if 'transform' in node.attrib:
                         newnode.attrib['transform'] = node.attrib['transform']
