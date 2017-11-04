@@ -71,16 +71,19 @@ class WriteTex(inkex.Effect):
                                      help="Write output directly to a new node in svg file")
 
     def effect(self):
-        self.zoom = float(self.document.xpath(
-            '//sodipodi:namedview/@inkscape:zoom', namespaces=inkex.NSS)[0])
-        self.width = 1/self.zoom * \
-            float(self.document.xpath(
-                '//sodipodi:namedview/@inkscape:window-width', namespaces=inkex.NSS)[0])
-        self.height = 1/self.zoom * \
-            float(self.document.xpath(
-                '//sodipodi:namedview/@inkscape:window-height', namespaces=inkex.NSS)[0])
-        self.width = self.unittouu(str(self.width)+'px')
-        self.height = self.unittouu(str(self.height)+'px')
+        # self.zoom = float(self.document.xpath(
+        #     '//sodipodi:namedview/@inkscape:zoom', namespaces=inkex.NSS)[0])
+        # self.width = 1/self.zoom * \
+        #     float(self.document.xpath(
+        #         '//sodipodi:namedview/@inkscape:window-width', namespaces=inkex.NSS)[0])
+        # self.height = 1/self.zoom * \
+        #     float(self.document.xpath(
+        #         '//sodipodi:namedview/@inkscape:window-height', namespaces=inkex.NSS)[0])
+        # self.width = self.unittouu(str(self.width)+'px')
+        # self.height = self.unittouu(str(self.height)+'px')
+
+        self.width = 0
+        self.height = 0
 
         self.options.scale = float(self.options.scale)
         action = self.options.action.strip("\"")
