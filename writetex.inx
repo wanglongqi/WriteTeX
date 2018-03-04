@@ -5,6 +5,7 @@
 	<dependency type="executable" location="extensions">inkex.py</dependency>
 	<param name="preamble" type="string" _gui-text="Preamble File: "></param>
 	<param name="read-as-line" type="boolean" _gui-text="Trade above as contents">false</param>
+	<param name="fontsize" type="int" precision="1" min="10" max="12" _gui-text="Font Size">12</param>
 	<param name="scale" type="float" precision="2" min="0.1" max="50" _gui-text="Scale Factor">1</param>
 	<param name="action" type="notebook">
 		<page name="new" _gui-text="New TeX String">

@@ -44,12 +44,16 @@ class WriteTex(inkex.Effect):
                                      help="Read preamble as string")
         self.OptionParser.add_option("-s", "--scale",
                                      action="store", type="string",
-                                     dest="scale", default="",
+                                     dest="scale", default="1.0",
                                      help="Scale Factor")
         self.OptionParser.add_option("-i", "--inputfile",
                                      action="store", type="string",
                                      dest="inputfile", default="",
                                      help="Read From File")
+        self.OptionParser.add_option("--fontsize",
+                                     action="store", type="string",
+                                     dest="fontsize", default="12",
+                                     help="Font size")
         self.OptionParser.add_option("-c", "--pdftosvg",
                                      action="store", type="string",
                                      dest="pdftosvg", default="",
@@ -93,7 +97,7 @@ class WriteTex(inkex.Effect):
                         print >>sys.stderr, node.attrib.get(
                             '{%s}text' % WriteTexNS, '').decode('string-escape')
                     return
-            print >>sys.stderr, "No text find."
+            print >>sys.stderr, "No text found."
             return
         else:
             if action == "new":
@@ -127,7 +131,7 @@ class WriteTex(inkex.Effect):
                     f.close()
 
             self.tex = r"""
-            \documentclass[landscape,a3paper]{article}
+            \documentclass[%spt]{article}
             \usepackage{geometry}
             %s
             \pagestyle{empty}
@@ -135,7 +139,7 @@ class WriteTex(inkex.Effect):
             \noindent
             %s
             \end{document}
-            """ % (preamble, self.text)
+            """ % (self.options.fontsize, preamble, self.text)
 
             tex = open(tex_file, 'w')
             tex.write(self.tex)
@@ -221,7 +225,7 @@ class WriteTex(inkex.Effect):
             try:
                 if self.options.rescale == 'true':
                     newnode.attrib['transform'] = 'matrix(%f,0,0,%f,%f,%f)' % (
-                        800*self.options.scale, 800*self.options.scale,
+                        1000*self.options.scale, 1000*self.options.scale,
                         self.view_center[0],
                         self.view_center[1])
                 else:
@@ -229,7 +233,7 @@ class WriteTex(inkex.Effect):
                         newnode.attrib['transform'] = node.attrib['transform']
                     else:
                         newnode.attrib['transform'] = 'matrix(%f,0,0,%f,%f,%f)' % (
-                            800*self.options.scale, 800*self.options.scale,
+                            1000*self.options.scale, 1000*self.options.scale,
                             self.view_center[0],
                             self.view_center[1])
                 newnode.attrib['style'] = node.attrib['style']
@@ -240,7 +244,7 @@ class WriteTex(inkex.Effect):
             p.append(newnode)
         else:
             newnode.attrib['transform'] = 'matrix(%f,0,0,%f,%f,%f)' % (
-                800*self.options.scale, 800*self.options.scale,
+                1000*self.options.scale, 1000*self.options.scale,
                 self.view_center[0],
                 self.view_center[1])
             self.current_layer.append(newnode)
