@@ -11,7 +11,7 @@ An Latex equation editor for Inkscape.
 This file is a part of WriteTeX extension for Inkscape. For more information,
 please refer to http://wanglongqi.github.io/WriteTeX.
 """
-
+from __future__ import print_function
 import inkex
 import os
 import tempfile
@@ -90,10 +90,10 @@ class WriteTex(inkex.Effect):
                         # p.remove(node)
                         p.append(doc)
                     else:
-                        print >>sys.stderr, node.attrib.get(
-                            '{%s}text' % WriteTexNS, '').decode('string-escape')
+                        print(node.attrib.get(
+                            '{%s}text' % WriteTexNS, '').decode('string-escape'), file=sys.stderr)
                     return
-            print >>sys.stderr, "No text find."
+            print("No text find.", file=sys.stderr)
             return
         else:
             if action == "new":
@@ -104,7 +104,7 @@ class WriteTex(inkex.Effect):
                 f.close()
 
             if self.text == "":
-                print >>sys.stderr, "empty LaTeX input. Nothing is changed."
+                print("empty LaTeX input. Nothing is changed.", file=sys.stderr)
                 return
 
             tmp_dir = tempfile.mkdtemp("", "writetex-")
@@ -154,8 +154,8 @@ class WriteTex(inkex.Effect):
                     tmp_dir=tmp_dir, tex_file=tex_file, out_file=out_file), shell=True)
 
             if not os.path.exists(pdf_file):
-                print >>sys.stderr, "Latex error: check your latex file and preamble."
-                print >>sys.stderr, open(log_file).read()
+                print("Latex error: check your latex file and preamble.",file=sys.stderr)
+                print(open(log_file).read(),file=sys.stderr)
                 return
             else:
                 if self.options.pdftosvg == '1':
