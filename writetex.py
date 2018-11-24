@@ -5,8 +5,8 @@ writetex.py
 An Latex equation editor for Inkscape.
 
 :Author: WANG Longqi <iqgnol@gmail.com>
-:Date: 2017-11-04
-:Version: v1.6.2
+:Date: 2018-11-24
+:Version: v1.7.0
 
 This file is a part of WriteTeX extension for Inkscape. For more information,
 please refer to http://wanglongqi.github.io/WriteTeX.
@@ -142,20 +142,28 @@ class WriteTex(inkex.Effect):
             tex.close()
 
             if self.options.latexcmd.lower() == "xelatex":
+                cmd = " CMD executed: {}".format('xelatex "-output-directory=%s" -interaction=nonstopmode -halt-on-error "%s" > "%s"'
+                                                 % (tmp_dir, tex_file, out_file))
                 subprocess.call('xelatex "-output-directory=%s" -interaction=nonstopmode -halt-on-error "%s" > "%s"'
                                 % (tmp_dir, tex_file, out_file), shell=True)
             elif self.options.latexcmd.lower() == "pdflatex":
+                cmd = " CMD executed: {}".format('pdflatex "-output-directory=%s" -interaction=nonstopmode -halt-on-error "%s" > "%s"'
+                                                 % (tmp_dir, tex_file, out_file))
                 subprocess.call('pdflatex "-output-directory=%s" -interaction=nonstopmode -halt-on-error "%s" > "%s"'
                                 % (tmp_dir, tex_file, out_file), shell=True)
             else:
                 # Setting `latexcmd` to following string produces the same result as xelatex condition:
                 # 'xelatex "-output-directory={tmp_dir}" -interaction=nonstopmode -halt-on-error "{tex_file}" > "{out_file}"'
+                cmd = " CMD executed: {}".format(self.options.latexcmd.format(
+                    tmp_dir=tmp_dir, tex_file=tex_file, out_file=out_file))
                 subprocess.call(self.options.latexcmd.format(
                     tmp_dir=tmp_dir, tex_file=tex_file, out_file=out_file), shell=True)
 
             if not os.path.exists(pdf_file):
-                print("Latex error: check your latex file and preamble.",file=sys.stderr)
-                print(open(log_file).read(),file=sys.stderr)
+                print("Latex error: check your latex file and preamble.",
+                      file=sys.stderr)
+                print(cmd, file=sys.stderr)
+                print(open(log_file).read(), file=sys.stderr)
                 return
             else:
                 if self.options.pdftosvg == '1':
@@ -329,7 +337,7 @@ class WriteTex(inkex.Effect):
             return(0, 0)
         stransf = transf.strip()
         result = re.match(
-            "(translate|scale|rotate|skewX|skewY|matrix)\s*\(([^)]*)\)\s*,?",
+            r"(translate|scale|rotate|skewX|skewY|matrix)\s*\(([^)]*)\)\s*,?",
             stransf)
         if result.group(1) == "translate":
             args = result.group(2).replace(',', ' ').split()
@@ -341,6 +349,7 @@ class WriteTex(inkex.Effect):
             return (dx, dy)
         else:
             return (0, 0)
+
 
 if __name__ == '__main__':
     e = WriteTex()
