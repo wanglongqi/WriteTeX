@@ -5,6 +5,8 @@ If you like this plugin, please star this project. It helps me to evaluate wheth
 
 如果你喜欢这个插件，请star这个项目，这可以帮助我了解这个插件的需求。谢谢！
 
+You may also want to check [WriteTeX<sup>2</sup>](https://github.com/wanglongqi/WriteTeX2).
+
 <img src=https://github.com/wanglongqi/WriteTeX/raw/master/writetex.png width=300px alt=Logo>
 
 An Inkscape extension: Latex/Tex editor for Inkscape, inspired by [textext](http://pav.iki.fi/software/textext/).
