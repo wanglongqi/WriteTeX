@@ -170,10 +170,14 @@ class WriteTex(inkex.Effect):
                     subprocess.call('pdf2svg %s %s' %
                                     (pdf_file, svg_file), shell=True)
                     self.merge_pdf2svg_svg(svg_file)
-                else:
+                elif self.options.pdftosvg == '2':
                     subprocess.call('pstoedit -f plot-svg "%s" "%s"  -dt -ssp -psarg -r9600x9600 > "%s" 2> "%s"'
                                     % (pdf_file, svg_file, out_file, err_file), shell=True)
                     self.merge_pstoedit_svg(svg_file)
+                else:
+                    subprocess.call('pdftocairo -svg "%s" "%s"  > "%s" 2> "%s"'
+                                    % (pdf_file, svg_file, out_file, err_file), shell=True)
+                    self.merge_pdf2svg_svg(svg_file)
 
             os.remove(tex_file)
             os.remove(log_file)
