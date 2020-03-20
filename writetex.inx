@@ -4,25 +4,25 @@
 	<id>tk.whywhow.writetex</id>
 	<dependency type="executable" location="extensions">inkex.py</dependency>
 	<param name="preamble" type="string" _gui-text="Preamble File: "></param>
-	<param name="read-as-line" type="boolean" _gui-text="Trade above as contents">false</param>
+	<param name="read-as-line" type="bool" _gui-text="Trade above as contents">false</param>
 	<param name="scale" type="float" precision="2" min="0.1" max="50" _gui-text="Scale Factor">1</param>
 	<param name="action" type="notebook">
 		<page name="new" _gui-text="New TeX String">
 			<param name="formula" type="string" _gui-text="LateX Source: "></param>
-			<param name="rescale" type="boolean" _gui-text="Rescale the node.">false</param>
+			<param name="rescale" type="bool" _gui-text="Rescale the node.">false</param>
 		</page>
 		<page name="newfile" _gui-text="New from File">
 			<param name="inputfile" type="string" _gui-text="LateX Source File: "></param>
 		</page>
 		<page name="viewold" _gui-text="View Original TeX">
 			<_param name="old" type="description">Choose this tab if you would like to obtain the original TeX string.</_param>
-			<param name="tosvg" type="boolean" _gui-text="Write output to Figure"></param>
+			<param name="tosvg" type="bool" _gui-text="Write output to Figure"></param>
 		</page>
 		<page name="help" _gui-text="Help">
 			<_param name="help" type="description">You need at least one LaTeX command and one PDFtoSVG command to execute this plugin correctly. Please visit http://writetex.tk for more information. If you have any suggestion, feel free to open an issue in the repository.</_param>
 		</page>
 	</param>
-	<param name="pdftosvg" type="enum" _gui-text="PDF to SVG converter: ">
+	<param name="pdftosvg" type="optiongroup" appearance="combo" _gui-text="PDF to SVG converter: ">
 		<_item value="1">PDF2SVG</_item>
 		<_item value="2">PStoEDIT</_item>
 		<_item value="2">PDFtoCAIRO</_item>
