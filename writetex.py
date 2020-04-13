@@ -19,6 +19,7 @@ import sys
 import copy
 import subprocess
 import re
+from lxml import etree
 # from distutils import spawn
 WriteTexNS = u'http://wanglongqi.github.io/WriteTeX'
 # from textext
@@ -30,43 +31,43 @@ class WriteTex(inkex.Effect):
 
     def __init__(self):
         inkex.Effect.__init__(self)
-        self.OptionParser.add_option("-f", "--formula",
-                                     action="store", type="string",
+        self.arg_parser.add_argument("-f", "--formula",
+                                     action="store", type=str,
                                      dest="formula", default="",
                                      help="LaTeX formula")
-        self.OptionParser.add_option("-p", "--preamble",
-                                     action="store", type="string",
+        self.arg_parser.add_argument("-p", "--preamble",
+                                     action="store", type=str,
                                      dest="preamble", default="",
                                      help="Preamble File")
-        self.OptionParser.add_option("--read-as-line",
-                                     action="store", type="string",
+        self.arg_parser.add_argument("--read-as-line",
+                                     action="store", type=str,
                                      dest="preline", default="",
                                      help="Read preamble as string")
-        self.OptionParser.add_option("-s", "--scale",
-                                     action="store", type="string",
+        self.arg_parser.add_argument("-s", "--scale",
+                                     action="store", type=str,
                                      dest="scale", default="",
                                      help="Scale Factor")
-        self.OptionParser.add_option("-i", "--inputfile",
-                                     action="store", type="string",
+        self.arg_parser.add_argument("-i", "--inputfile",
+                                     action="store", type=str,
                                      dest="inputfile", default="",
                                      help="Read From File")
-        self.OptionParser.add_option("-c", "--pdftosvg",
-                                     action="store", type="string",
+        self.arg_parser.add_argument("-c", "--pdftosvg",
+                                     action="store", type=str,
                                      dest="pdftosvg", default="",
                                      help="PDFtoSVG Converter")
-        self.OptionParser.add_option("--action", action="store",
-                                     type="string", dest="action",
+        self.arg_parser.add_argument("--action", action="store",
+                                     type=str, dest="action",
                                      default=None, help="")
-        self.OptionParser.add_option("-r", "--rescale",
-                                     action="store", type="string",
+        self.arg_parser.add_argument("-r", "--rescale",
+                                     action="store", type=str,
                                      dest="rescale", default="",
                                      help="Rescale the object")
-        self.OptionParser.add_option("-l", "--latexcmd",
-                                     action="store", type="string",
+        self.arg_parser.add_argument("-l", "--latexcmd",
+                                     action="store", type=str,
                                      dest="latexcmd", default="xelatex",
                                      help="Latex command used to compile")
-        self.OptionParser.add_option("-t", "--tosvg",
-                                     action="store", type="string",
+        self.arg_parser.add_argument("-t", "--tosvg",
+                                     action="store", type=str,
                                      dest="tosvg", default="false",
                                      help="Write output directly to a new node in svg file")
 
@@ -75,23 +76,23 @@ class WriteTex(inkex.Effect):
         action = self.options.action.strip("\"")
         if action == "viewold":
             for i in self.options.ids:
-                node = self.selected[i]
+                node = self.svg.selected[i]
                 if node.tag != '{%s}g' % SVG_NS:
                     continue
                 if '{%s}text' % WriteTexNS in node.attrib:
                     if self.options.tosvg == "true":
-                        doc = inkex.etree.fromstring(
+                        doc = etree.fromstring(
                             '<text x="%g" y="%g">%s</text>' % (
-                                self.view_center[0],
-                                self.view_center[1],
+                                self.svg.namedview.center[0],
+                                self.svg.namedview.center[1],
                                 node.attrib.get(
-                                    '{%s}text' % WriteTexNS, '').decode('string-escape')))
+                                    '{%s}text' % WriteTexNS, '')))
                         p = node.getparent()
                         # p.remove(node)
                         p.append(doc)
                     else:
                         print(node.attrib.get(
-                            '{%s}text' % WriteTexNS, '').decode('string-escape'), file=sys.stderr)
+                            '{%s}text' % WriteTexNS, ''), file=sys.stderr)
                     return
             print("No text find.", file=sys.stderr)
             return
@@ -197,9 +198,9 @@ class WriteTex(inkex.Effect):
             innode = svgin.tag.rsplit('}', 1)[-1]
             # replace svg with group by select specific elements
             if innode == 'svg':
-                svgout = inkex.etree.Element(inkex.addNS('g', 'WriteTexNS'))
+                svgout = etree.Element(inkex.addNS('g'))
             else:
-                svgout = inkex.etree.Element(inkex.addNS(innode, 'WriteTexNS'))
+                svgout = etree.Element(inkex.addNS(innode))
                 for att in svgin.attrib:
                     svgout.attrib[att] = svgin.attrib[att]
 
@@ -213,16 +214,16 @@ class WriteTex(inkex.Effect):
 
             return svgout
 
-        doc = inkex.etree.parse(svg_file)
+        doc = etree.parse(svg_file)
         svg = doc.getroot()
         newnode = svg_to_group(self, svg)
         newnode.attrib['{%s}text' %
-                       WriteTexNS] = self.text.encode('string-escape')
+                       WriteTexNS] = self.text
 
         replace = False
 
         for i in self.options.ids:
-            node = self.selected[i]
+            node = self.svg.selected[i]
             if node.tag != '{%s}g' % SVG_NS:
                 continue
             if '{%s}text' % WriteTexNS in node.attrib:
@@ -234,16 +235,16 @@ class WriteTex(inkex.Effect):
                 if self.options.rescale == 'true':
                     newnode.attrib['transform'] = 'matrix(%f,0,0,%f,%f,%f)' % (
                         800*self.options.scale, 800*self.options.scale,
-                        self.view_center[0],
-                        self.view_center[1])
+                        self.svg.namedview.center[0],
+                        self.svg.namedview.center[1])
                 else:
                     if 'transform' in node.attrib:
                         newnode.attrib['transform'] = node.attrib['transform']
                     else:
                         newnode.attrib['transform'] = 'matrix(%f,0,0,%f,%f,%f)' % (
                             800*self.options.scale, 800*self.options.scale,
-                            self.view_center[0],
-                            self.view_center[1])
+                            self.svg.namedview.center[0],
+                            self.svg.namedview.center[1])
                 newnode.attrib['style'] = node.attrib['style']
             except:
                 pass
@@ -253,9 +254,9 @@ class WriteTex(inkex.Effect):
         else:
             newnode.attrib['transform'] = 'matrix(%f,0,0,%f,%f,%f)' % (
                 800*self.options.scale, 800*self.options.scale,
-                self.view_center[0],
-                self.view_center[1])
-            self.current_layer.append(newnode)
+                self.svg.namedview.center[0],
+                self.svg.namedview.center[1])
+            self.svg.get_current_layer().append(newnode)
 
     def merge_pdf2svg_svg(self, svg_file):
         # This is the smallest point coordinates assumed
@@ -282,7 +283,7 @@ class WriteTex(inkex.Effect):
                             MAX_XY[1] = y
                         p.append(copy.copy(i))
 
-            svgout = inkex.etree.Element(inkex.addNS('g', 'WriteTexNS'))
+            svgout = etree.Element(inkex.addNS('g'))
             for node in svgin:
                 if node is svgout:
                     continue
@@ -291,16 +292,16 @@ class WriteTex(inkex.Effect):
                 svgout.append(node)
             return svgout
 
-        doc = inkex.etree.parse(svg_file)
+        doc = etree.parse(svg_file)
         svg = doc.getroot()
         newnode = svg_to_group(self, svg)
         newnode.attrib['{%s}text' %
-                       WriteTexNS] = self.text.encode('string-escape')
+                       WriteTexNS] = self.text
 
         replace = False
 
         for i in self.options.ids:
-            node = self.selected[i]
+            node = self.svg.selected[i]
             if node.tag != '{%s}g' % SVG_NS:
                 continue
             if '{%s}text' % WriteTexNS in node.attrib:
@@ -312,16 +313,16 @@ class WriteTex(inkex.Effect):
                 if self.options.rescale == 'true':
                     newnode.attrib['transform'] = 'matrix(%f,0,0,%f,%f,%f)' % (
                         self.options.scale, self.options.scale,
-                        self.view_center[0],
-                        self.view_center[1])
+                        self.svg.namedview.center[0],
+                        self.svg.namedview.center[1])
                 else:
                     if 'transform' in node.attrib:
                         newnode.attrib['transform'] = node.attrib['transform']
                     else:
                         newnode.attrib['transform'] = 'matrix(%f,0,0,%f,%f,%f)' % (
                             self.options.scale, self.options.scale,
-                            self.view_center[0]-MAX_XY[0]*self.options.scale,
-                            self.view_center[1]-MAX_XY[1]*self.options.scale)
+                            self.svg.namedview.center[0]-MAX_XY[0]*self.options.scale,
+                            self.svg.namedview.center[1]-MAX_XY[1]*self.options.scale)
                 newnode.attrib['style'] = node.attrib['style']
             except:
                 pass
@@ -329,11 +330,11 @@ class WriteTex(inkex.Effect):
             p.remove(node)
             p.append(newnode)
         else:
-            self.current_layer.append(newnode)
+            self.svg.get_current_layer().append(newnode)
             newnode.attrib['transform'] = 'matrix(%f,0,0,%f,%f,%f)' % (
                 self.options.scale, self.options.scale,
-                self.view_center[0]-MAX_XY[0]*self.options.scale,
-                self.view_center[1]-MAX_XY[1]*self.options.scale)
+                self.svg.namedview.center[0]-MAX_XY[0]*self.options.scale,
+                self.svg.namedview.center[1]-MAX_XY[1]*self.options.scale)
 
     @staticmethod
     def parse_transform(transf):
@@ -357,4 +358,4 @@ class WriteTex(inkex.Effect):
 
 if __name__ == '__main__':
     e = WriteTex()
-    e.affect()
+    e.run()
