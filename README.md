@@ -1,9 +1,8 @@
 [WriteTeX](https://wanglongqi.github.io/WriteTeX/)
 ========
 
-If you like this plugin, please star this project. It helps me to evaluate whether this plugin is needed. Thanks!
+Due to incompatible change of Inkscape extension API, this extension has to split into two versions. For Inkscape version **lower than 1.0**, users should use the files in **0.9.x folder**, the other users should use files in **1.0.x folder**.
 
-如果你喜欢这个插件，请star这个项目，这可以帮助我了解这个插件的需求。谢谢！
 
 You may also want to check [WriteTeX<sup>2</sup>](https://github.com/wanglongqi/WriteTeX2).
 
