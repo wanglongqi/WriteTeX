@@ -66,14 +66,23 @@ class WriteTex(inkex.Effect):
                                      action="store", type=str,
                                      dest="latexcmd", default="xelatex",
                                      help="Latex command used to compile")
+        self.arg_parser.add_argument("-P", "--additionalpath",
+                                     action="store", type=str,
+                                     dest="additionalpath", default="",
+                                     help="Additional search path")
         self.arg_parser.add_argument("-t", "--tosvg",
                                      action="store", type=str,
                                      dest="tosvg", default="false",
                                      help="Write output directly to a new node in svg file")
 
     def effect(self):
-        self.options.scale = float(self.options.scale)
+        WriteTex.handle_path(self.options.additionalpath)
         action = self.options.action.strip("\"")
+        if action == "settings":
+            print('Settings are auto applied, please to switch to other tab for other functions.',
+                file=sys.stderr)
+            return
+        self.options.scale = float(self.options.scale)
         if action == "viewold":
             for i in self.options.ids:
                 node = self.svg.selected[i]
@@ -355,6 +364,14 @@ class WriteTex(inkex.Effect):
         else:
             return (0, 0)
 
+    @staticmethod
+    def handle_path(newpath):
+        paths = os.environ.get('PATH', '')
+        # Do not add to path if already added
+        if newpath in paths:
+            return
+        if newpath:
+            os.environ['PATH'] += os.path.pathsep + newpath
 
 if __name__ == '__main__':
     e = WriteTex()
