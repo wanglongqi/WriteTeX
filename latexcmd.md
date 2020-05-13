@@ -18,6 +18,8 @@ There are three options can be specified:
 
 By default, `xelatex` and `pdflatex` are supported. You just need to type in `xelatex` or `pdflatex` to obtain the correct command for these two LaTeX commands. For other distribution, you will need to write you own command. Feel free to contribute your command for your preferred LaTeX distribution.
 
+**This option is moved to Settings tab in latest WriteTeX.**
+
 Best regards and happy LaTeXing.
 
 ## [Go back](/)
