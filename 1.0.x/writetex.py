@@ -79,7 +79,7 @@ class WriteTex(inkex.Effect):
         WriteTex.handle_path(self.options.additionalpath)
         action = self.options.action.strip("\"")
         if action == "settings":
-            print('Settings are auto applied, please to switch to other tab for other functions.',
+            print('Settings are auto applied, please switch to other tab for other functions.',
                 file=sys.stderr)
             return
         self.options.scale = float(self.options.scale)
@@ -97,7 +97,6 @@ class WriteTex(inkex.Effect):
                                 node.attrib.get(
                                     '{%s}text' % WriteTexNS, '')))
                         p = node.getparent()
-                        # p.remove(node)
                         p.append(doc)
                     else:
                         print(node.attrib.get(
