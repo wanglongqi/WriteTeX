@@ -2,7 +2,6 @@
 <inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
 	<_name>WriteTeX</_name>
 	<id>tk.whywhow.writetex</id>
-	<dependency type="executable" location="extensions">inkex.py</dependency>
 	<param name="preamble" type="string" _gui-text="Preamble File: "></param>
 	<param name="read-as-line" type="bool" _gui-text="Trade above as contents">false</param>
 	<param name="scale" type="float" precision="2" min="0.1" max="50" _gui-text="Scale Factor">1</param>
