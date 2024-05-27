@@ -1,12 +1,12 @@
 [WriteTeX](https://wanglongqi.github.io/WriteTeX/)
 ========
 
-Due to incompatible change of Inkscape extension API, this extension has to split into two versions. For Inkscape version **lower than 1.0**, users should use the files in **0.9.x folder**, the other users should use files in **1.0.x folder**.
+Due to incompatible change of Inkscape extension API, this extension has to split into two versions. For Inkscape version **lower than 1.0**, users should use the files in **0.9.x folder**, the other users should use files in **1.x.x folder**.
 
 
 You may also want to check [WriteTeX<sup>2</sup>](https://github.com/wanglongqi/WriteTeX2).
 
-<img src=https://github.com/wanglongqi/WriteTeX/raw/master/writetex.png width=300px alt=Logo>
+<img src=https://github.com/wanglongqi/WriteTeX/raw/master/writetex.png width=300px alt=Logo/>
 
 An Inkscape extension: Latex/Tex editor for Inkscape, inspired by [textext](http://pav.iki.fi/software/textext/).
 
@@ -23,6 +23,15 @@ Just drop `writetex.py` and `writetex.inx` to Inkscape extension folder, which i
 
 - For Windows user, `pdf2svg` can be downloaded from [here](https://github.com/wanglongqi/WriteTeX/releases/download/v1.1/pdf2svg-x64.7z) or [here](https://github.com/dawbarton/pdf2svg). 
 - For Mac user, `pdf2svg` can be installed by homebrew, or download from [here](https://github.com/wanglongqi/WriteTeX/releases/download/v1.6.1/pdf2svg-MacOSX.7z).
+
+## WriteTeX on Inkscape 1.3 (MacOSX)
+WriteTeX is tested on Inkscape 1.3.
+
+<img src=https://github.com/wanglongqi/WriteTeX/raw/master/images/mac-v1.3.png width=1000px alt="WriteTeX on Inkscape v1.3"/>
+
+If you use `MacTeX` and Homebrew version of `pdf2svg`, you may need to set the additional search path as in following image:
+
+<img src=https://github.com/wanglongqi/WriteTeX/raw/master/images/mac-with-pdf2svg.png width=600px alt="WriteTeX on Inkscape v1.3"/>
 
 ## More info
 Can be found in the [website](https://wanglongqi.github.io/WriteTeX/).
