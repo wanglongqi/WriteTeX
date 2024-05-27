@@ -172,7 +172,10 @@ class WriteTex(inkex.Effect):
                 print("Latex error: check your latex file and preamble.",
                       file=sys.stderr)
                 print(cmd, file=sys.stderr)
-                print(open(log_file).read(), file=sys.stderr)
+                try:
+                    print(open(log_file).read(), file=sys.stderr)
+                except FileNotFoundError:
+                    print("Log file not generated, check your xelatex installation.")
                 return
             else:
                 if self.options.pdftosvg == '1':
