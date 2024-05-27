@@ -369,7 +369,9 @@ class WriteTex(inkex.Effect):
         if newpath in paths:
             return
         if newpath:
-            os.environ['PATH'] += os.path.pathsep + newpath
+            # Keep new paths in front of system path. Suggested by @L-N1988 in
+            # https://github.com/wanglongqi/WriteTeX/issues/29
+            os.environ['PATH'] = newpath + os.path.pathsep + os.environ['PATH']
 
 if __name__ == '__main__':
     e = WriteTex()
