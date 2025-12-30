@@ -116,6 +116,10 @@ class WriteTex(inkex.Effect):
                 print("empty LaTeX input. Nothing is changed.", file=sys.stderr)
                 return
 
+            if self.options.pdftosvg == '3':
+                self.merge_ziamath()
+                return
+
             tmp_dir = tempfile.mkdtemp("", "writetex-")
             tex_file = os.path.join(tmp_dir, "writetex.tex")
             svg_file = os.path.join(tmp_dir, "writetex.svg")
@@ -203,6 +207,58 @@ class WriteTex(inkex.Effect):
             if os.path.exists(pdf_file):
                 os.remove(pdf_file)
             os.rmdir(tmp_dir)
+
+    def merge_ziamath(self):
+        """
+        Renders LaTeX using Ziamath and merges it into the document.
+        Path injection is handled locally to maintain legacy code style.
+        """
+        try:
+            # Local path injection for 2025 Inkscape compatibility
+            import os
+            import sys
+            base_path = os.path.dirname(__file__)
+            lib_path = os.path.join(base_path, 'lib')
+            if lib_path not in sys.path:
+                sys.path.insert(0, lib_path)
+
+            import ziamath as zm
+            
+            # 1. Render LaTeX directly (No subprocess needed)
+            # Use the scale option as the base font size
+            # math_obj = zm.Latex(self.text, size=float(self.options.scale or 12.0))
+            math_obj = zm.Latex(self.text)
+            svg_raw = math_obj.svg()
+
+            # 2. Sanitize and Parse XML
+            start_tag = svg_raw.find('<svg')
+            svg_clean = svg_raw[start_tag:].strip().encode('utf-8')
+            svg_root = etree.fromstring(svg_clean)
+
+            # 3. Create group node using legacy constants
+            new_node = etree.Element('{%s}g' % SVG_NS)
+            for child in svg_root:
+                new_node.append(child)
+
+            # 4. Set legacy WriteTexNS metadata for re-editability
+            new_node.set('{%s}text' % WriteTexNS, self.text)
+
+            # 5. DOM Integration: Replace if selected, else append
+            if self.options.ids:
+                for i in self.options.ids:
+                    node = self.svg.selected[i]
+                    # Inherit original transform to preserve translation/position
+                    new_node.set("transform", node.get("transform", ""))
+                    parent = node.getparent()
+                    parent.replace(node, new_node)
+                    break
+            else:
+                self.svg.get_current_layer().append(new_node)
+                
+        except Exception as e:
+            # Matches the original WriteTeX error reporting style
+            print("Ziamath Error: %s" % str(e), file=sys.stderr)
+
 
     def merge_pstoedit_svg(self, svg_file):
         def svg_to_group(self, svgin):

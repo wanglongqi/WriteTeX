@@ -1,0 +1,37 @@
+Metadata-Version: 2.4
+Name: ziafont
+Version: 0.11
+Summary: Convert TTF/OTF font glyphs to SVG paths
+Home-page: https://ziafont.readthedocs.io
+Author: Collin J. Delker
+Author-email: code@collindelker.com
+License: MIT
+Project-URL: Documentation, https://ziafont.readthedocs.io
+Project-URL: Source Code, https://github.com/cdelker/ziafont
+Keywords: font,truetype,opentype,svg,glyph
+Classifier: Development Status :: 4 - Beta
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Programming Language :: Python :: 3.14
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Intended Audience :: Education
+Classifier: Intended Audience :: Science/Research
+Classifier: Intended Audience :: End Users/Desktop
+Classifier: Intended Audience :: Developers
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+Dynamic: license-file
+
+# ziafont
+
+Ziafont reads TrueType/OpenType font files and draws characters and strings as SVG <path> elements. Unlike the SVG <text> element, the output of Ziafont's SVG will render identically on any system, independent of whether the original font is available.
+
+Ziafont supports fonts with TrueType glyph outlines contained in a "glyf" table in the font (these fonts typically have a .ttf extensions), or fonts with a "CFF " table (typically with a .otf extension). Kerning adjustment and glyph substitution are supported if the font has a "GPOS" table.
+
+Documentation is available at [readthedocs](https://ziafont.readthedocs.io). There is also an [online demo](https://cdelker.github.io/pyscript/ziafont.html).

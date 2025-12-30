@@ -28,7 +28,7 @@
 	<param name="pdftosvg" type="optiongroup" appearance="combo" _gui-text="PDF to SVG converter: ">
 		<_item value="1">PDF2SVG</_item>
 		<_item value="2">PStoEDIT</_item>
-		<_item value="2">PDFtoCAIRO</_item>
+		<_item value="3">ZiaMath</_item>
 	</param>
 	<effect>
 		<object-type>all</object-type>

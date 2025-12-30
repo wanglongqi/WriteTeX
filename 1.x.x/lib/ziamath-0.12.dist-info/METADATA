@@ -1,0 +1,43 @@
+Metadata-Version: 2.2
+Name: ziamath
+Version: 0.12
+Summary: Render MathML and LaTeX Math to SVG in pure Python without Latex installation
+Home-page: https://ziamath.readthedocs.io
+Author: Collin J. Delker
+Author-email: code@collindelker.com
+License: MIT
+Project-URL: Documentation, https://ziamath.readthedocs.io
+Project-URL: Source Code, https://github.com/cdelker/ziamath
+Keywords: MathML,LaTeX,math,font,truetype,opentype,svg
+Classifier: Development Status :: 4 - Beta
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Intended Audience :: Education
+Classifier: Intended Audience :: Science/Research
+Classifier: Intended Audience :: End Users/Desktop
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Scientific/Engineering :: Mathematics
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+Requires-Dist: ziafont>=0.10
+Requires-Dist: latex2mathml
+
+# ziamath
+
+Render MathML or LaTeX Math expressions as SVG using pure Python. Does not require a Latex installation, nor a network connection.
+
+Ziamath comes with the STIXTwoMath-Regular font installed for use by default.
+Other Math-enabled Open Type fonts (TTF or OTF files) may also be used.
+
+![Example](https://github.com/cdelker/ziamath/blob/05e25b1789acc8ee816971d384aa851ffb197f7a/example.png)
+
+Documentation is available at [readthedocs](https://ziamath.readthedocs.io).
+
+Also try the [online demo](https://cdelker.github.io/pyscript/ziamath.html) based on Pyscript.
