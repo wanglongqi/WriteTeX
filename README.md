@@ -1,6 +1,8 @@
 [WriteTeX](https://wanglongqi.github.io/WriteTeX/)
 ========
 
+## Newly added `ZiaMath` backend works WITHOUT any TeX or PDF2SVG converter.
+
 Due to incompatible change of Inkscape extension API, this extension has to split into two versions. For Inkscape version **lower than 1.0**, users should use the files in **0.9.x folder**, the other users should use files in **1.x.x folder**.
 
 
